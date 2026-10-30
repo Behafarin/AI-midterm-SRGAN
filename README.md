@@ -51,13 +51,15 @@ AI-midterm/
 │   ├── 04_evaluate_srgan.py
 │   ├── 05_generate_sr_dataset.py
 │   └── 07_compare_models.py
-└── outputs/
+└── outputs/cache/            # results of the run reported here
     ├── figures/              # every figure in this README
     ├── results/              # metric tables, per-epoch training logs (CSV), exact config per stage (JSON)
     └── logs/                 # one log file per stage + run_all.log (full terminal output)
 ```
 
-The trained models, checkpoints and image caches (`outputs/models`, `outputs/checkpoints`, `outputs/cache`, about 3 GB) are not in the repo because of their size. Running the pipeline recreates them.
+> **Note on paths:** when you run the pipeline, it writes these folders directly under `outputs/` (`outputs/figures`, `outputs/results`, `outputs/logs`). In this repository, the results of the reported run were uploaded under `outputs/cache/`.
+
+The trained models, checkpoints and resized image arrays (about 3 GB) are not in the repo because of their size. Running the pipeline recreates them.
 
 ---
 
@@ -81,7 +83,7 @@ source .venv/bin/activate
 CUDA_VISIBLE_DEVICES=0 bash run_all.sh        # detach: Ctrl+b then d
 ```
 
-`run_all.sh` runs the seven stages below in order. It writes `outputs/logs/<stage>.done` when a stage finishes and skips finished stages on later runs. If the run is interrupted, run the same command again: training continues from the last saved checkpoint (§10). To run a single stage, pass its tag, e.g. `bash run_all.sh 03_srgan`.
+`run_all.sh` runs the seven stages below in order. It writes `outputs/cache/logs/<stage>.done` when a stage finishes and skips finished stages on later runs. If the run is interrupted, run the same command again: training continues from the last saved checkpoint (§10). To run a single stage, pass its tag, e.g. `bash run_all.sh 03_srgan`.
 
 | Tag | Script | Produces |
 |---|---|---|
@@ -114,7 +116,7 @@ The random seed is fixed to **42** everywhere: the split, shuffling, weight init
 | ↳ validation (10% of train) | 873 | 873 | 1,746 |
 | **Test (30%)** | **3,742** | **3,737** | **7,479** |
 
-The exact file list of each split is saved in `outputs/results/split_train_files.csv` and `split_test_files.csv`.
+The exact file list of each split is saved in `outputs/cache/results/split_train_files.csv` and `split_test_files.csv`.
 
 ---
 
@@ -124,7 +126,7 @@ The exact file list of each split is saved in `outputs/results/split_train_files
 
 To create the SRGAN's inputs, each 128×128 image is shrunk 4× to 32×32 using bicubic resizing with anti-aliasing. This is the same degradation used in the SRGAN paper. The 32×32 images keep only 1/16 of the pixels.
 
-![Scaled examples](outputs/figures/01_scaled_examples.png)
+![Scaled examples](outputs/cache/figures/01_scaled_examples.png)
 *Top: 128×128 test images. Bottom: the 32×32 versions the SRGAN receives (enlarged with nearest-neighbour so the real pixels are visible).*
 
 ### Transformations (classifiers, training batches only)
@@ -139,14 +141,14 @@ Each training batch gets new random transformations every epoch. Validation and 
 | Translation | ±10% horizontal and vertical |
 | Brightness | ±20% |
 
-![Augmentations](outputs/figures/02_augmentations.png)
+![Augmentations](outputs/cache/figures/02_augmentations.png)
 
 ### Normalization
 
 - **Classifiers:** a `Rescaling(1/127.5, offset=-1)` layer **inside the model** maps pixels from `[0, 255]` to `[-1, 1]`, which is the range MobileNetV2's ImageNet weights expect. Because the layer is part of the model, the saved model normalizes its own inputs. On a sample batch, the values went from min 0 / max 255 / mean 110.5 to min −1.00 / max 1.00 / mean −0.13.
 - **SRGAN:** following the paper, 32×32 inputs are scaled to `[0, 1]` and 128×128 targets to `[-1, 1]` (the generator ends in `tanh`). Each training pair is also flipped horizontally at random.
 
-![Normalization](outputs/figures/03_normalization.png)
+![Normalization](outputs/cache/figures/03_normalization.png)
 
 ---
 
@@ -159,7 +161,7 @@ This is the same transfer-learning recipe as Assignment 1, where **MobileNetV2**
 - **Stage 2 (fine-tuning):** the last 30 backbone layers are unfrozen. Adam with learning rate `1e-5`, up to 6 epochs.
 - **Both stages:** binary cross-entropy loss, batch size 32, `EarlyStopping(patience=3, restore_best_weights=True)`, `ReduceLROnPlateau(factor=0.5, patience=2)`.
 
-![Model A training curves](outputs/figures/model_A_training_curves.png)
+![Model A training curves](outputs/cache/figures/model_A_training_curves.png)
 
 Model A reached **98.2% validation accuracy** after head training and **98.3%** during fine-tuning. Training accuracy is lower than validation accuracy because training images are augmented and the head uses dropout.
 
@@ -186,18 +188,18 @@ Model A reached **98.2% validation accuracy** after head training and **98.3%** 
 | Adversarial training | **150 epochs** |
 | Images per epoch | all 15,705 training images, batch size 16 (981 steps per epoch) |
 | Optimizer | Adam (β₁ = 0.9), learning rate `1e-4` for epochs 1–75, then `1e-5` for epochs 76–150 |
-| Checkpoints | every 5 epochs (see §10), with a sample image grid saved each time to `outputs/figures/srgan_progress/` |
+| Checkpoints | every 5 epochs (see §10), with a sample image grid saved each time to `outputs/cache/figures/srgan_progress/` |
 
 ### Training curves
 
-![SRGAN losses](outputs/figures/04_srgan_losses.png)
+![SRGAN losses](outputs/cache/figures/04_srgan_losses.png)
 
 - The **content loss fell steadily**, from 0.317 at epoch 1 to about 0.13 at epoch 75. It then **dropped sharply when the learning rate decreased** at epoch 76, and ended at **0.113** at epoch 150.
 - The **discriminator learned to separate real from generated images very quickly**. Its accuracy rose above 98% within 10 epochs, and to about 99.5–100% after the learning-rate drop. From then on the adversarial loss stayed high (about 11–12), which means the discriminator always won. In practice, most of the generator's improvement came from the VGG content loss rather than from the adversarial signal. This is a known SRGAN behavior (see §9).
 
 ### Results on unseen test images
 
-![SRGAN test examples](outputs/figures/05_srgan_test_examples.png)
+![SRGAN test examples](outputs/cache/figures/05_srgan_test_examples.png)
 *Rows, top to bottom: the 32×32 input, bicubic upscaling, the SRGAN output, and the original 128×128 image.*
 
 The SRGAN images are **much sharper than bicubic**. Fur texture, eyes, whiskers and edges are restored, while bicubic stays blurry. The SRGAN sometimes **invents details** that are not in the original. For example, in the last column it replaced the patterned background with a different texture.
@@ -215,12 +217,12 @@ Bicubic scores higher on PSNR and SSIM even though it looks blurrier. These metr
 
 After training, every image in the training, validation and test sets is shrunk to 32×32 and passed through the trained generator. This creates a second 128×128 dataset made **only of SRGAN outputs**, with the same labels and the same split. Generating all 24,930 images took about 2 minutes.
 
-![Model B training images](outputs/figures/06_model_B_training_images.png)
+![Model B training images](outputs/cache/figures/06_model_B_training_images.png)
 *Top: training images for Model A (real). Bottom: the same images as Model B sees them (SRGAN reconstructions from 32×32).*
 
 **Model B** uses **exactly** Model A's architecture, hyperparameters, transformations and normalization. The only difference is the training data.
 
-![Model B training curves](outputs/figures/model_B_training_curves.png)
+![Model B training curves](outputs/cache/figures/model_B_training_curves.png)
 
 Model B reached about **96% validation accuracy** on SRGAN images. This is lower than Model A's 98% on real images, because the SRGAN images carry less information.
 
@@ -254,13 +256,13 @@ The positive class is *dog*. AUC is the area under the ROC curve.
 | B | SRGAN | 0.9440 | 0.9274 | 0.9633 | 0.9450 | 0.9904 |
 | B | bicubic | 0.8896 | 0.9213 | 0.8518 | 0.8852 | 0.9619 |
 
-![Metric comparison](outputs/figures/07_metrics_comparison.png)
+![Metric comparison](outputs/cache/figures/07_metrics_comparison.png)
 
-![ROC curves](outputs/figures/08_roc_curves.png)
+![ROC curves](outputs/cache/figures/08_roc_curves.png)
 
-![Confusion matrices](outputs/figures/09_confusion_matrices.png)
+![Confusion matrices](outputs/cache/figures/09_confusion_matrices.png)
 
-Per-class precision and recall for every combination are in `outputs/results/classification_reports.txt`.
+Per-class precision and recall for every combination are in `outputs/cache/results/classification_reports.txt`.
 
 ---
 
@@ -302,9 +304,9 @@ Every expensive step saves its progress, so a crash or shutdown loses at most a 
 This was used in practice. The run was stopped on purpose after the epoch-145 checkpoint so the server could be shut down. On restart, the log shows `RESUMED from .../ckpt-31: pre-train epoch 10, adversarial epoch 145`, and training finished the last 5 epochs.
 
 Every stage also saves:
-- its own log file (`outputs/logs/<stage>.log`)
-- per-epoch metrics as CSV (`outputs/results/*_log.csv`)
-- the exact configuration it ran with (`outputs/results/config_<stage>.json`)
+- its own log file (`outputs/cache/logs/<stage>.log`)
+- per-epoch metrics as CSV (`outputs/cache/results/*_log.csv`)
+- the exact configuration it ran with (`outputs/cache/results/config_<stage>.json`)
 
 ---
 
