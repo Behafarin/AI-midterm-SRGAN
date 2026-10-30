@@ -1,0 +1,12 @@
+# Linux + NVIDIA GPU. "and-cuda" pulls the matching CUDA/cuDNN wheels (needs NVIDIA driver >= 525).
+tensorflow[and-cuda]>=2.18,<2.22
+keras>=3.6
+numpy
+pandas
+scikit-learn
+matplotlib
+pillow
+kaggle
+jupyter
+nbconvert
+ipykernel
