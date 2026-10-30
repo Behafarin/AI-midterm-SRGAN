@@ -1,0 +1,35 @@
+2026-10-30 13:27:19 | INFO | ==========================================================================================
+2026-10-30 13:27:19 | INFO | STAGE 07_compare_models started | smoke test: False
+2026-10-30 13:27:19 | INFO | python 3.11.16 | tensorflow 2.21.0 | keras 3.15.1
+2026-10-30 13:27:19 | INFO | GPUs visible: 0 [] | CUDA_VISIBLE_DEVICES=1
+2026-10-30 13:27:19 | WARNING | No GPU visible to TensorFlow -- training will be very slow.
+2026-10-30 13:27:19 | INFO | output dir: /home/behi/AI-midterm/outputs
+2026-10-30 13:28:12 | INFO | Model comparison on the test set (positive class = dog):
+  model     test_images  Accuracy  Precision  Recall     F1    AUC
+Model A    real 128x128    0.9735     0.9629  0.9850 0.9738 0.9978
+Model A   SRGAN 128x128    0.9434     0.9315  0.9572 0.9442 0.9897
+Model A bicubic 128x128    0.8758     0.9480  0.7950 0.8648 0.9591
+Model B    real 128x128    0.9729     0.9587  0.9882 0.9733 0.9974
+Model B   SRGAN 128x128    0.9440     0.9274  0.9633 0.9450 0.9904
+Model B bicubic 128x128    0.8896     0.9213  0.8518 0.8852 0.9619
+2026-10-30 13:28:12 | INFO | Model A on real 128x128:
+              precision    recall  f1-score   support
+
+         cat     0.9847    0.9621    0.9732      3742
+         dog     0.9629    0.9850    0.9738      3737
+
+    accuracy                         0.9735      7479
+   macro avg     0.9738    0.9735    0.9735      7479
+weighted avg     0.9738    0.9735    0.9735      7479
+
+2026-10-30 13:28:12 | INFO | Model B on SRGAN 128x128:
+              precision    recall  f1-score   support
+
+         cat     0.9619    0.9246    0.9429      3742
+         dog     0.9274    0.9633    0.9450      3737
+
+    accuracy                         0.9440      7479
+   macro avg     0.9446    0.9440    0.9440      7479
+weighted avg     0.9446    0.9440    0.9440      7479
+
+2026-10-30 13:28:13 | INFO | STAGE 07_compare_models finished.

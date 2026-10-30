@@ -1,0 +1,60 @@
+===== Model A on real 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.9847    0.9621    0.9732      3742
+         dog     0.9629    0.9850    0.9738      3737
+
+    accuracy                         0.9735      7479
+   macro avg     0.9738    0.9735    0.9735      7479
+weighted avg     0.9738    0.9735    0.9735      7479
+
+===== Model A on SRGAN 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.9560    0.9297    0.9427      3742
+         dog     0.9315    0.9572    0.9442      3737
+
+    accuracy                         0.9434      7479
+   macro avg     0.9438    0.9435    0.9434      7479
+weighted avg     0.9438    0.9434    0.9434      7479
+
+===== Model A on bicubic 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.8237    0.9564    0.8851      3742
+         dog     0.9480    0.7950    0.8648      3737
+
+    accuracy                         0.8758      7479
+   macro avg     0.8858    0.8757    0.8750      7479
+weighted avg     0.8858    0.8758    0.8750      7479
+
+===== Model B on real 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.9879    0.9575    0.9725      3742
+         dog     0.9587    0.9882    0.9733      3737
+
+    accuracy                         0.9729      7479
+   macro avg     0.9733    0.9729    0.9729      7479
+weighted avg     0.9733    0.9729    0.9729      7479
+
+===== Model B on SRGAN 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.9619    0.9246    0.9429      3742
+         dog     0.9274    0.9633    0.9450      3737
+
+    accuracy                         0.9440      7479
+   macro avg     0.9446    0.9440    0.9440      7479
+weighted avg     0.9446    0.9440    0.9440      7479
+
+===== Model B on bicubic 128x128 =====
+              precision    recall  f1-score   support
+
+         cat     0.8623    0.9273    0.8936      3742
+         dog     0.9213    0.8518    0.8852      3737
+
+    accuracy                         0.8896      7479
+   macro avg     0.8918    0.8895    0.8894      7479
+weighted avg     0.8918    0.8896    0.8894      7479
+

@@ -1,0 +1,11 @@
+2026-10-30 13:17:57 | INFO | ==========================================================================================
+2026-10-30 13:17:57 | INFO | STAGE 04_evaluate_srgan started | smoke test: False
+2026-10-30 13:17:57 | INFO | python 3.11.16 | tensorflow 2.21.0 | keras 3.15.1
+2026-10-30 13:17:57 | INFO | GPUs visible: 0 [] | CUDA_VISIBLE_DEVICES=1
+2026-10-30 13:17:57 | WARNING | No GPU visible to TensorFlow -- training will be very slow.
+2026-10-30 13:17:57 | INFO | output dir: /home/behi/AI-midterm/outputs
+2026-10-30 13:18:52 | INFO | Super-resolution quality on 7479 test images:
+ method  PSNR_dB   SSIM
+bicubic  25.0639 0.7077
+  SRGAN  23.8781 0.6582
+2026-10-30 13:18:52 | INFO | STAGE 04_evaluate_srgan finished.

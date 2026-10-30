@@ -1,0 +1,5 @@
+split,cat,dog,total
+train (70%),8730,8721,17451
+train-fit,7857,7848,15705
+validation (10% of train),873,873,1746
+test (30%),3742,3737,7479

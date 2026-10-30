@@ -1,0 +1,28 @@
+2026-10-29 12:29:35 | INFO | ==========================================================================================
+2026-10-29 12:29:35 | INFO | STAGE train_model_A started | smoke test: False
+2026-10-29 12:29:35 | INFO | python 3.11.16 | tensorflow 2.21.0 | keras 3.15.1
+2026-10-29 12:29:35 | INFO | GPUs visible: 0 [] | CUDA_VISIBLE_DEVICES=1
+2026-10-29 12:29:35 | WARNING | No GPU visible to TensorFlow -- training will be very slow.
+2026-10-29 12:29:35 | INFO | output dir: /home/behi/AI-midterm/outputs
+2026-10-29 12:29:35 | INFO | Training data: real 128x128 images
+2026-10-29 12:29:35 | INFO | train-fit: (15705, 128, 128, 3)  validation: (1746, 128, 128, 3)
+2026-10-29 12:29:36 | INFO | [model_A] stage 1: head training (frozen backbone), lr=0.001, max 8 epochs
+2026-10-29 12:29:59 | INFO | [model_A_head] epoch 1: accuracy=0.9411  auc=0.9877  loss=0.1417  val_accuracy=0.9777  val_auc=0.9973  val_loss=0.06081  learning_rate=0.001  (22s)
+2026-10-29 12:30:18 | INFO | [model_A_head] epoch 2: accuracy=0.9549  auc=0.992  loss=0.1114  val_accuracy=0.9771  val_auc=0.9983  val_loss=0.05511  learning_rate=0.001  (20s)
+2026-10-29 12:30:38 | INFO | [model_A_head] epoch 3: accuracy=0.9598  auc=0.9935  loss=0.1003  val_accuracy=0.98  val_auc=0.998  val_loss=0.05146  learning_rate=0.001  (20s)
+2026-10-29 12:30:57 | INFO | [model_A_head] epoch 4: accuracy=0.9625  auc=0.9938  loss=0.09655  val_accuracy=0.9777  val_auc=0.9976  val_loss=0.05827  learning_rate=0.001  (19s)
+2026-10-29 12:31:17 | INFO | [model_A_head] epoch 5: accuracy=0.9622  auc=0.9943  loss=0.09355  val_accuracy=0.9811  val_auc=0.998  val_loss=0.04949  learning_rate=0.001  (20s)
+2026-10-29 12:31:37 | INFO | [model_A_head] epoch 6: accuracy=0.9664  auc=0.995  loss=0.08811  val_accuracy=0.98  val_auc=0.9975  val_loss=0.05472  learning_rate=0.001  (20s)
+2026-10-29 12:31:56 | INFO | [model_A_head] epoch 7: accuracy=0.9661  auc=0.9948  loss=0.08806  val_accuracy=0.98  val_auc=0.9976  val_loss=0.0494  learning_rate=0.001  (20s)
+2026-10-29 12:32:16 | INFO | [model_A_head] epoch 8: accuracy=0.9688  auc=0.9959  loss=0.07794  val_accuracy=0.9822  val_auc=0.9976  val_loss=0.05254  learning_rate=0.0005  (20s)
+2026-10-29 12:32:16 | INFO | [model_A] saved /home/behi/AI-midterm/outputs/models/model_A_head.keras
+2026-10-29 12:32:16 | INFO | [model_A] stage 2: fine-tuning last 30 backbone layers, lr=1e-05, max 6 epochs
+2026-10-29 12:32:49 | INFO | [model_A_finetune] epoch 1: accuracy=0.9304  auc=0.9839  loss=0.1807  val_accuracy=0.9777  val_auc=0.998  val_loss=0.06343  learning_rate=1e-05  (32s)
+2026-10-29 12:33:17 | INFO | [model_A_finetune] epoch 2: accuracy=0.9491  auc=0.9895  loss=0.1287  val_accuracy=0.9828  val_auc=0.9982  val_loss=0.04819  learning_rate=1e-05  (28s)
+2026-10-29 12:33:44 | INFO | [model_A_finetune] epoch 3: accuracy=0.9537  auc=0.9914  loss=0.1158  val_accuracy=0.9817  val_auc=0.9982  val_loss=0.0482  learning_rate=1e-05  (27s)
+2026-10-29 12:34:12 | INFO | [model_A_finetune] epoch 4: accuracy=0.9573  auc=0.992  loss=0.1118  val_accuracy=0.9828  val_auc=0.9987  val_loss=0.04739  learning_rate=1e-05  (28s)
+2026-10-29 12:34:40 | INFO | [model_A_finetune] epoch 5: accuracy=0.9615  auc=0.9938  loss=0.09881  val_accuracy=0.9811  val_auc=0.9983  val_loss=0.04708  learning_rate=1e-05  (28s)
+2026-10-29 12:35:07 | INFO | [model_A_finetune] epoch 6: accuracy=0.9614  auc=0.9932  loss=0.1009  val_accuracy=0.9794  val_auc=0.9988  val_loss=0.051  learning_rate=1e-05  (27s)
+2026-10-29 12:35:07 | INFO | [model_A] saved /home/behi/AI-midterm/outputs/models/model_A_final.keras
+2026-10-29 12:35:09 | INFO | [model_A] final validation: accuracy=0.9811  auc=0.9983  loss=0.0471
+2026-10-29 12:35:10 | INFO | STAGE train_model_A finished.

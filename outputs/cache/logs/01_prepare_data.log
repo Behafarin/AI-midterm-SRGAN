@@ -1,0 +1,23 @@
+2026-10-29 12:28:56 | INFO | ==========================================================================================
+2026-10-29 12:28:56 | INFO | STAGE 01_prepare_data started | smoke test: False
+2026-10-29 12:28:56 | INFO | python 3.11.16 | tensorflow 2.21.0 | keras 3.15.1
+2026-10-29 12:28:56 | INFO | GPUs visible: 0 [] | CUDA_VISIBLE_DEVICES=1
+2026-10-29 12:28:56 | WARNING | No GPU visible to TensorFlow -- training will be very slow.
+2026-10-29 12:28:56 | INFO | output dir: /home/behi/AI-midterm/outputs
+2026-10-29 12:28:56 | INFO | Raw dataset found in /home/behi/AI-midterm/data_raw
+2026-10-29 12:28:56 | INFO | Labeled images found: 24930 (cats=12472, dogs=12458)
+2026-10-29 12:28:56 | INFO | Resizing train split to 128x128 ...
+2026-10-29 12:29:03 | INFO |   5000/17451 images resized
+2026-10-29 12:29:09 | INFO |   10000/17451 images resized
+2026-10-29 12:29:16 | INFO |   15000/17451 images resized
+2026-10-29 12:29:19 | INFO | Resizing test split to 128x128 ...
+2026-10-29 12:29:26 | INFO |   5000/7479 images resized
+2026-10-29 12:29:30 | INFO | Saved cache to /home/behi/AI-midterm/outputs/cache
+2026-10-29 12:29:30 | INFO | Split table:
+                    split  cat  dog  total
+              train (70%) 8730 8721  17451
+                train-fit 7857 7848  15705
+validation (10% of train)  873  873   1746
+               test (30%) 3742 3737   7479
+2026-10-29 12:29:32 | INFO | Normalization: before min=0 max=255 mean=110.5 | after min=-1.00 max=1.00 mean=-0.134
+2026-10-29 12:29:32 | INFO | STAGE 01_prepare_data finished.
